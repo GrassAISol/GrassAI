@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrassAI - Advanced Solana Market Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <span class="logo-icon">🌱</span>
+                    <span class="logo-text">GrassAI</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <button class="hamburger-btn">☰</button>
+                <div class="nav-links">
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/terms" class="nav-link">Terms</a>
+                    <a href="https://x.com/grassaionsol" target="_blank" rel="noopener noreferrer" class="nav-link">
+                        Twitter
+                        <svg class="external-link-icon" width="14" height="14" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <a href="/dashboard" class="nav-cta">Launch App</a>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-text">
+                <h1 class="main-title">AI-Powered Market Analysis for Solana</h1>
+                <p class="hero-subtitle">Professional-grade market analysis powered by AI, delivering real-time insights and risk assessment for Solana traders</p>
+            </div>
+            <div class="hero-content glass-box">
+                <div class="action-buttons">
+                    <a href="/dashboard" class="btn btn-primary glass-button">Access Analytics</a>
+                    <a href="/about" class="btn btn-secondary glass-button">View Documentation</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Now Section -->
+        <section class="features-section" style="position: relative; z-index: 2;">
+            <div class="section-header glass-box">
+                <h2>Available Now</h2>
+                <p class="section-subtitle">Advanced Market Analysis Tools</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Market Health Score -->
+                <div class="feature-card glass-box">
+                    <div class="feature-icon-wrapper">
+                        <span class="feature-emoji">📊</span>
+                    </div>
+                    <h3>Market Health Score</h3>
+                    <ul class="feature-list">
+                        <li>RSI Analysis (30% weight)</li>
+                        <li>Volume Analysis (20% weight)</li>
+                        <li>MACD Indicators (30% weight)</li>
+                        <li>Moving Averages (20% weight)</li>
+                        <li>30-second updates</li>
+                    </ul>
+                </div>
+
+                <!-- Touch Grass Index -->
+                <div class="feature-card glass-box">
+                    <div class="feature-icon-wrapper">
+                        <span class="feature-emoji">🌱</span>
+                    </div>
+                    <h3>Touch Grass Index™</h3>
+                    <ul class="feature-list">
+                        <li>Volatility Analysis (35%)</li>
+                        <li>Volume Tracking (25%)</li>
+                        <li>Price Action (25%)</li>
+                        <li>Market Sentiment (15%)</li>
+                        <li>60-second updates</li>
+                    </ul>
+                </div>
+
+                <!-- Real-Time Analytics -->
+                <div class="feature-card glass-box">
+                    <div class="feature-icon-wrapper">
+                        <span class="feature-emoji">📈</span>
+                    </div>
+                    <h3>Real-Time Analytics</h3>
+                    <ul class="feature-list">
+                        <li>Price & Volume Tracking</li>
+                        <li>Technical Indicators</li>
+                        <li>Market Trend Analysis</li>
+                        <li>Performance Metrics</li>
+                        <li>Sub-second latency</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coming Soon Section -->
+        <section class="development-section" style="position: relative; z-index: 2;">
+            <div class="section-header glass-box">
+                <h2>Coming Soon via Telegram</h2>
+                <p class="section-subtitle">Advanced AI-Powered Features</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card glass-box">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Market Analysis</h3>
+                    <ul class="feature-list">
+                        <li>Neural Network Price Prediction</li>
+                        <li>Pattern Recognition</li>
+                        <li>Anomaly Detection</li>
+                        <li>Risk Factor Analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card glass-box">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Contract Analysis</h3>
+                    <ul class="feature-list">
+                        <li>Smart Contract Security Checks</li>
+                        <li>Liquidity Pool Monitoring</li>
+                        <li>Holder Distribution Analysis</li>
+                        <li>Manipulation Detection</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card glass-box">
+                    <div class="feature-icon">📱</div>
+                    <h3>Telegram Integration</h3>
+                    <ul class="feature-list">
+                        <li>Real-time Trading Signals</li>
+                        <li>Market Alert System</li>
+                        <li>Custom Risk Notifications</li>
+                        <li>Performance Reports</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Metrics Section (New) -->
+        <section class="metrics-section" style="position: relative; z-index: 2;">
+            <div class="section-header glass-box">
+                <h2>System Performance</h2>
+                <p class="section-subtitle">Real-Time Market Analysis Engine</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card glass-box">
+                    <div class="metric-value">99.99%</div>
+                    <div class="metric-label">Data Accuracy</div>
+                </div>
+                <div class="metric-card glass-box">
+                    <div class="metric-value">30s</div>
+                    <div class="metric-label">Update Frequency</div>
+                </div>
+                <div class="metric-card glass-box">
+                    <div class="metric-value">99.95%</div>
+                    <div class="metric-label">System Uptime</div>
+                </div>
+                <div class="metric-card glass-box">
+                    <div class="metric-value">&lt;200ms</div>
+                    <div class="metric-label">Average Latency</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section (completely removed glass-box class) -->
+        <section class="cta-section solid-section">
+            <h2 class="solid-text">Experience Advanced Market Analysis</h2>
+            <p>Join the community and unlock professional-grade analytics</p>
+            <div class="action-buttons">
+                <a href="/dashboard" class="btn btn-primary glass-button">Access Analytics</a>
+                <a href="/about" class="btn btn-secondary glass-button">View Documentation</a>
+            </div>
+        </section>
+
+        {% include 'footer.html' %}
+    </div>
+
+    <!-- Add this before the closing </body> tag -->
+    <script>
+    let updateInterval;
+
+    async function updateMarketPrice() {
+        try {
+            const response = await fetch('/api/market-stats');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            
+            console.log('Market Data:', data); // Debug log
+            
+            if (data && data.data) {
+                const marketData = data.data;
+                
+                // Update price pill in nav
+                const priceElement = document.querySelector('.market-pill .price');
+                const changeElement = document.querySelector('.market-pill .change');
+                
+                if (priceElement) {
+                    const price = parseFloat(marketData.price || 0);
+                    priceElement.textContent = `$${price.toFixed(4)}`;
+                }
+                
+                if (changeElement) {
+                    const change = parseFloat(marketData.price_change_24h || 0);
+                    changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+                    changeElement.className = `change ${change >= 0 ? 'positive' : 'negative'}`;
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching market stats:', error);
+            // Set default values on error
+            const priceElement = document.querySelector('.market-pill .price');
+            const changeElement = document.querySelector('.market-pill .change');
+            
+            if (priceElement) priceElement.textContent = '$0.0000';
+            if (changeElement) {
+                changeElement.textContent = '+0.00%';
+                changeElement.className = 'change positive';
+            }
+            
+            // Clear interval if there's an error
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+        }
+    }
+
+    // Update immediately
+    document.addEventListener('DOMContentLoaded', () => {
+        updateMarketPrice();
+        // Set interval and store reference
+        updateInterval = setInterval(updateMarketPrice, 30000);
+    });
+
+    // Clear interval when page is hidden/closed
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && updateInterval) {
+            clearInterval(updateInterval);
+        } else {
+            updateMarketPrice();
+            updateInterval = setInterval(updateMarketPrice, 30000);
+        }
+    });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="{{ url_for('static', filename='js/timeago.js') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize market stats
+        fetchMarketStats();
+        // Refresh market stats every 30 seconds
+        setInterval(fetchMarketStats, 30000);
+        
+        // Initialize Touch Grass Index
+        updateTouchGrassIndex();
+        // Refresh TGI every minute
+        setInterval(updateTouchGrassIndex, 60000);
+        
+        // Initialize other dashboard components if wallet is connected
+        if (document.querySelector('[data-wallet-connected="true"]')) {
+            fetchDashboardData();
+        }
+    });
+
+    async function fetchDashboardData() {
+        try {
+            const response = await fetch('/api/dashboard');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.status === 'success' && data.data) {
+                updateDashboard(data.data);
+            } else {
+                console.error('Invalid dashboard data:', data);
+            }
+        } catch (e) {
+            console.error('Error fetching dashboard data:', e);
+        }
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <!-- Top Navigation Bar -->
+    <div class="top-bar glass-box">
+        <div class="top-bar-content">
+            <div class="logo-section">
+                <a href="/" class="logo">🌿 GrassAI</a>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard" class="nav-link active">Dashboard</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/terms" class="nav-link">Terms</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <div class="dashboard-grid">
+            <!-- Wallet Section -->
+            <!-- Remove this entire section -->
+
+            <!-- Market Health -->
+            <div class="dashboard-section glass-box market-health">
+                <div class="section-header">
+                    <div class="header-content">
+                        <div class="header-icon">📊</div>
+                        <h2>Market Health Score</h2>
+                    </div>
+                    <div class="last-updated">
+                        Updated <span class="timeago" data-timestamp="0"></span>
+                    </div>
+                </div>
+                
+                <div class="health-content">
+                    <!-- Main Score Display -->
+                    <div class="score-display">
+                        <div class="health-level" id="health-level">CALCULATING</div>
+                        <div class="score-value" id="health-score">0.0</div>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="health-message" id="health-message">
+                        Analyzing market health...
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <!-- RSI -->
+                        <div class="metric-box" data-metric="rsi">
+                            <div class="metric-header">
+                                <span class="metric-title">RSI</span>
+                                <span class="metric-weight">0.30</span>
+                            </div>
+                            <div class="metric-value" id="rsi-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar" id="rsi-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Volume -->
+                        <div class="metric-box" data-metric="volume">
+                            <div class="metric-header">
+                                <span class="metric-title">Volume</span>
+                                <span class="metric-weight">0.20</span>
+                            </div>
+                            <div class="metric-value" id="volume-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar" id="volume-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- MACD -->
+                        <div class="metric-box" data-metric="macd">
+                            <div class="metric-header">
+                                <span class="metric-title">MACD</span>
+                                <span class="metric-weight">0.30</span>
+                            </div>
+                            <div class="metric-value" id="macd-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar" id="macd-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Moving Averages -->
+                        <div class="metric-box" data-metric="ma">
+                            <div class="metric-header">
+                                <span class="metric-title">Moving Averages</span>
+                                <span class="metric-weight">0.20</span>
+                            </div>
+                            <div class="metric-value" id="ma-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress">
+                                    <div class="progress-bar" id="ma-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Stats Section -->
+            <div class="dashboard-section glass-box market-stats">
+                <div class="section-header">
+                    <div class="header-content">
+                        <div class="header-icon">📊</div>
+                        <h2>Market Stats</h2>
+                    </div>
+                    <div class="last-updated">
+                        <span id="last-updated">Updated a few seconds ago</span>
+                    </div>
+                </div>
+                
+                <div class="market-content">
+                    <div class="current-price">
+                        <span class="price-value">{{ data.market_stats.price }}</span>
+                        <span class="price-change {% if data.market_stats.change_24h >= 0 %}positive{% else %}negative{% endif %}">
+                            {{ data.market_stats.change_24h }}%
+                        </span>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">24h Volume</span>
+                            <span class="stat-value">{{ data.market_stats.volume_24h }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Market Cap</span>
+                            <span class="stat-value">{{ data.market_stats.market_cap }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">24h High</span>
+                            <span class="stat-value">{{ data.market_stats.high_24h }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">24h Low</span>
+                            <span class="stat-value">{{ data.market_stats.low_24h }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Touch Grass Index -->
+            <div class="dashboard-section glass-box touch-grass-index">
+                <div class="section-header">
+                    <div class="header-content">
+                        <div class="header-icon">🌿</div>
+                        <h2>Touch Grass Index™</h2>
+                    </div>
+                    <div class="last-updated">
+                        Updated <span class="timeago" data-timestamp="0"></span>
+                    </div>
+                </div>
+                
+                <div class="tgi-content">
+                    <!-- Main Score Display -->
+                    <div class="score-display moderate">
+                        <div class="risk-level" id="tgi-risk-level">MODERATE</div>
+                        <div class="score-value" id="tgi-score">0.0</div>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="tgi-message" id="tgi-message">
+                        Loading Touch Grass Index...
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <!-- Volatility -->
+                        <div class="metric-box" data-metric="volatility">
+                            <div class="metric-header">
+                                <span class="metric-title">Volatility</span>
+                                <span class="metric-weight" id="volatility-weight">0.35</span>
+                            </div>
+                            <div class="metric-value" id="volatility-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar low" id="volatility-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- FOMO -->
+                        <div class="metric-box" data-metric="fomo">
+                            <div class="metric-header">
+                                <span class="metric-title">FOMO</span>
+                                <span class="metric-weight" id="fomo-weight">0.25</span>
+                            </div>
+                            <div class="metric-value" id="fomo-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar low" id="fomo-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Price Deviation -->
+                        <div class="metric-box" data-metric="deviation">
+                            <div class="metric-header">
+                                <span class="metric-title">Price Deviation</span>
+                                <span class="metric-weight" id="deviation-weight">0.20</span>
+                            </div>
+                            <div class="metric-value" id="deviation-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar low" id="deviation-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Market Stress -->
+                        <div class="metric-box" data-metric="stress">
+                            <div class="metric-header">
+                                <span class="metric-title">Market Stress</span>
+                                <span class="metric-weight" id="stress-weight">0.20</span>
+                            </div>
+                            <div class="metric-value" id="stress-value">0.0</div>
+                            <div class="metric-progress">
+                                <div class="progress-bar low" id="stress-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Analysis Section -->
+            <div class="dashboard-section glass-box contract-analysis">
+                <div class="section-header">
+                    <div class="header-content">
+                        <div class="header-icon">💻</div>
+                        <h2>Terminal</h2>
+                    </div>
+                    <div class="last-updated">
+                        Updated <span class="timeago" data-timestamp="0"></span>
+                    </div>
+                </div>
+                
+                <div class="terminal-container glass-box">
+                    <div class="terminal-header">
+                        <div class="terminal-controls">
+                            <span class="terminal-btn red"></span>
+                            <span class="terminal-btn yellow"></span>
+                            <span class="terminal-btn green"></span>
+                        </div>
+                        <div class="terminal-title">GrassAI Terminal 🌿</div>
+                    </div>
+                    
+                    <div id="terminal-output">
+                        <!-- Remove initial content - terminal.js will add it -->
+                    </div>
+                    
+                    <div class="terminal-input-container">
+                        <span class="terminal-prompt">grassai@solana:~$</span>
+                        <input type="text" 
+                               id="terminal-input" 
+                               class="terminal-input" 
+                               placeholder="Enter command..."
+                               autocomplete="off"
+                               spellcheck="false">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/wallet.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/terminal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
+
+{% macro format_number(value, decimals=2) %}
+    {{ '{:,.{}f}'.format(value|float if value is not none else 0, decimals) }}
+{% endmacro %} 
